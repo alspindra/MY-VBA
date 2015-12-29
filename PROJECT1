@@ -3,3 +3,38 @@
 'by Lakshmi Srinivasa
 
 'This module is used for comparision between input and specific paramenters
+Sub CompareValues()
+
+Dim ws1 As Worksheet
+Dim ws2 As Worksheet
+Dim ws1Lrow As Long
+Dim ws2Lrow As Long
+Dim i As Integer
+Dim x As Integer
+Dim k As Integer
+Dim reference As String
+
+Set ws1 = ThisWorkbook.Sheets("Sheet1")
+Set ws2 = ThisWorkbook.Sheets("Sheet2")
+
+ws1Lrow = Worksheets("Sheet1").Range("A" & Worksheets("Sheet1").Rows.Count).End(xlUp).Row
+ws2Lrow = Worksheets("Sheet2").Range("A" & Worksheets("Sheet2").Rows.Count).End(xlUp).Row
+
+Application.ScreenUpdating = False
+
+For i = 1 To ws2Lrow Step 1
+    ws2.Select
+        Cells(i, 1).Select
+        reference = ActiveCell
+
+    ws1.Select
+        For x = 2 To ws1Lrow
+            k = InStr(1, Cells(x, 10), reference, vbTextCompare)
+            If k > 0 Then
+                Cells(x, 10).Interior.ColorIndex = 6
+            End If
+        Next x
+Next i
+
+
+End Sub
